@@ -9,6 +9,7 @@ import gui.listener.EncabezadoListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,10 +35,17 @@ public class ControlPanel extends JPanel implements ActionListener{
         super.setBackground(Color.RED);
         super.setLayout(new BorderLayout());
         btnJuego = new JButton("Click me");
+        
+        
         txtMinas = new JTextField("10");
         txtMinas.setPreferredSize(new Dimension(60, 30));
+        txtMinas.setFont(new Font("Courier New", Font.BOLD, 24));
+        txtMinas.setForeground(Color.RED);
+        txtMinas.setBackground(Color.BLACK);
+        
         txtTiempo = new JTextField("000");
-        txtMinas.setPreferredSize(new Dimension(60, 30));
+        txtTiempo.setPreferredSize(new Dimension(60, 30));
+        
         btnJuego.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {

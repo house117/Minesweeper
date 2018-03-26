@@ -5,11 +5,13 @@
  */
 package Objects;
 
+import java.io.Serializable;
+
 /**
  *
  * @author cavr0
  */
-public class Celda {
+public class Celda implements Serializable{
     private Estado estado;
     private Boolean mina;
     private Integer numero;

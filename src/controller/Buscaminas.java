@@ -8,19 +8,30 @@ package controller;
 import Objects.Celda;
 import Objects.Estado;
 import Objects.GameEst;
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  *
- * @author cavr0
+ * @author House
  */
-public class Buscaminas {
+//hacer clase que lea y escriba los archivos objeto escribidor de archivos
+/*
+si tengo archivo lo pongo
+si no simplemente lo creo sin preguntarle
+al usuario
+buscar como abrir un archivo de dialogo para indicar donde se
+debe de guardar en la version con GUI
+*/
+
+public class Buscaminas implements Serializable{
     private Celda tablero[][];
     private Integer dimx;
     private Integer dimy;
     private Integer minas;
     private GameEst juego;
     private boolean juegoOn;
+    
     
     
     
