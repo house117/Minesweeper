@@ -10,11 +10,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -23,8 +20,8 @@ import javax.swing.JTextField;
  *
  * @author House
  */
-public class ControlPanel extends JPanel implements ActionListener{
-    private JButton btnJuego;
+public class ControlPanel extends JPanel{
+    private TButton btnJuego;
     private JTextField txtMinas;
     private JTextField txtTiempo;
     private JLabel texto;
@@ -34,7 +31,8 @@ public class ControlPanel extends JPanel implements ActionListener{
         super();
         super.setBackground(Color.RED);
         super.setLayout(new BorderLayout());
-        btnJuego = new JButton("Click me");
+        btnJuego = new TButton("/images/vivo.png");
+        TButton btn = new TButton("/images/muerto.png");
         
         
         txtMinas = new JTextField("10");
@@ -51,13 +49,14 @@ public class ControlPanel extends JPanel implements ActionListener{
             public void actionPerformed(ActionEvent ae) {
                 System.out.println(txtMinas.getText());
                 System.out.println(txtTiempo.getText());
-                listener.btnJuegoOnClick(txtMinas.getText(), txtTiempo.getText());
+                listener.btnJuegoOnClick();
             }
         });
        
         JPanel pnlBoton = new JPanel();
         pnlBoton.setBackground(Color.GREEN);
         pnlBoton.add(btnJuego);
+        pnlBoton.add(btn);
 
         super.add(pnlBoton, BorderLayout.CENTER);
         super.add(txtMinas, BorderLayout.WEST);
@@ -70,10 +69,5 @@ public class ControlPanel extends JPanel implements ActionListener{
     }
     public Boolean botonJuegoActionPerformed(){
         return true;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

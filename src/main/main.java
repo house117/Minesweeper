@@ -17,10 +17,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
+import javax.swing.SwingUtilities;
 
 /**
  *
- * @author cavr0
+ * @author House
  */
 /*
 TAREA ENTENDER JAJA
@@ -50,11 +51,17 @@ public class main {
     
     
     public static void main(String[] args) {
-        pichon();
+        grafico();
     }
     
     public static void grafico(){
-        PrincipalFrame ventana = new PrincipalFrame("Buscaminas");
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                PrincipalFrame ventana = new PrincipalFrame("Buscaminas");
+            }
+        });
+        
     }
     public static void pichon(){
         Scanner sc = new Scanner(System.in);

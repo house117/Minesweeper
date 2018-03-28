@@ -9,7 +9,7 @@ package gui.listener;
  *
  * @author House
  */
-public interface EncabezadoListener {
-    public void btnJuegoOnClick ();
-    
+public interface TableroListener {
+    public void btnCasillaOnClick (Integer x, Integer y);
+    public void onRightClickButton(Integer x, Integer y);
 }

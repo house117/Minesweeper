@@ -5,16 +5,24 @@
  */
 package gui;
 
+import Objects.GameEst;
+import Objects.Juego;
+import controller.Buscaminas;
 import gui.listener.EncabezadoListener;
+import gui.listener.TableroListener;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileFilter;
 import javax.swing.ButtonGroup;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 
@@ -25,26 +33,62 @@ import javax.swing.KeyStroke;
 public class PrincipalFrame extends JFrame{
     private ControlPanel pnlControl;
     private TableroPanel pnlTablero;
+    private Buscaminas buscaminas;
     public PrincipalFrame(String title){
         super(title);
+       
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
         super.setSize(400, 600);
         super.setLayout(new BorderLayout());
-        
         super.setJMenuBar(createMenu());
+        super.setLocationRelativeTo(null);
         
-       
-           pnlControl = new ControlPanel();
-           pnlControl.setListener(new EncabezadoListener() {
+        
+        buscaminas = new Buscaminas(10, 10, 10);
+        
+        
+        pnlControl = new ControlPanel();
+        pnlControl.setListener(new EncabezadoListener() {
             @Override
-            public void btnJuegoOnClick(String minas, String tiempo) {
-               pnlTablero.setMensaje(minas+" : "+tiempo);
+            public void btnJuegoOnClick() {
+               //pnlTablero.setMensaje(minas+" : "+tiempo);
+               buscaminas = new Buscaminas(10, 10, 10);
+               pnlTablero.removeAll();
+               pnlTablero.drawTablero(buscaminas);
+               PrincipalFrame.this.repaint();
             }
         });
            
-           pnlTablero = new TableroPanel();
            
-           
+        pnlTablero = new TableroPanel();
+        pnlTablero.drawTablero(buscaminas);
+        pnlTablero.setListener(new TableroListener() {
+            @Override
+            public void btnCasillaOnClick(Integer x, Integer y) {
+                System.out.printf("hicieron click en [%d][%d]",x,y);
+                buscaminas.abrirCelda(x, y);
+                if(buscaminas.getEstado() == GameEst.Sigue){
+                    pnlTablero.removeAll();
+                    pnlTablero.drawTablero(buscaminas);
+                    PrincipalFrame.this.repaint();
+                }else{
+                    System.out.println(buscaminas.getEstado());
+                }
+                
+            }
+            @Override
+            public void onRightClickButton(Integer x, Integer y){
+               System.out.printf("hicieron click en [%d][%d]",x,y);
+               buscaminas.marcarCelda(x, y);
+               pnlTablero.removeAll();
+               pnlTablero.drawTablero(buscaminas);
+               PrincipalFrame.this.repaint();
+               /*
+               
+               SI GANO O PERDIO, EL CAMBIO DEL ICONITO, LENTES O MUERTO
+               */
+            }
+        });
            super.add(pnlControl, BorderLayout.NORTH);
            super.add(pnlTablero, BorderLayout.CENTER);
            super.setVisible(true);
@@ -67,14 +111,28 @@ public class PrincipalFrame extends JFrame{
         nnAbrir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("Abrir...");
+            JFileChooser fc = new JFileChooser();
+                if (fc.showOpenDialog(PrincipalFrame.this) == JFileChooser.APPROVE_OPTION){
+                    //cargar el archivo 
+                    System.out.println(fc.getSelectedFile());
+                }
             }
         });
         JMenuItem nnGuardar = new JMenuItem("Guardar...");
         nnGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("Guardar...");
+               JFileChooser fc = new JFileChooser();
+               if(fc.showSaveDialog(PrincipalFrame.this) == JFileChooser.APPROVE_OPTION){
+                   //guardar el archivo
+                   System.out.println(fc.getSelectedFile());
+                   File f = new File(fc.getSelectedFile().toString());
+                   if(f.exists()){
+                       JOptionPane.showMessageDialog(PrincipalFrame.this, "Mensajito",
+                               "aasd",
+                               JOptionPane.WARNING_MESSAGE);
+                   }
+               }
             }
         });
         JMenuItem nnSalir = new JMenuItem("Salir");
