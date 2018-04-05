@@ -104,6 +104,9 @@ public class Buscaminas implements Serializable{
                 looser(x, y);
 
             }
+            if(winner()){
+                System.out.println("GANASTE!");
+            }
         }
     }
     public boolean winner(){

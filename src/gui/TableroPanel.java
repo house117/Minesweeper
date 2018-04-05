@@ -23,8 +23,10 @@ import javax.swing.JPanel;
  */
 public class TableroPanel extends JPanel{
     private TableroListener listener;
+    
     public TableroPanel(){
         super();
+        
         //super.setBackground(Color.BLUE);
         super.setLayout(null);
     }
@@ -39,11 +41,13 @@ public class TableroPanel extends JPanel{
                     }
                 abierto.setBounds(j*35+10, i*35+10, 30, 30);
                 super.add(abierto);      
-            }else{
+                }else{
                    TButton cerrado = new TButton(celda, j, i);
+                   cerrado.setBounds(j*35+10, i*35+10, 30, 30);
                     cerrado.addActionListener(new ActionListener() {
                        @Override
                        public void actionPerformed(ActionEvent ae) {
+                           listener.btnCasillaOnClick(cerrado.getXx(), cerrado.getYy());
                        }
                     });
                     cerrado.addMouseListener(new MouseAdapter() {

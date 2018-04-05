@@ -8,6 +8,7 @@ package gui;
 import Objects.GameEst;
 import Objects.Juego;
 import controller.Buscaminas;
+import controller.GestionadorArchivo;
 import gui.listener.EncabezadoListener;
 import gui.listener.TableroListener;
 import java.awt.BorderLayout;
@@ -16,6 +17,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -74,6 +79,11 @@ public class PrincipalFrame extends JFrame{
                 }else{
                     System.out.println(buscaminas.getEstado());
                 }
+                //AGREGAR CONDICIONES SI GANAS O PIERDES!!!!!
+                //AGREGAR NIVELES DE DIFICULTAD
+                //AGREGAR VENTANA RESIZABLE FALSE Y QUE SE REDIMENSIONE
+                //DE ACUERDO A LA DIFICULTAD, QUE EL BOTON CAMBIE DE CARITA FELIZ A TRISTE.
+                //O SI GANAS QUE SE PONGA LOS LENTES!!!
                 
             }
             @Override
@@ -114,7 +124,22 @@ public class PrincipalFrame extends JFrame{
             JFileChooser fc = new JFileChooser();
                 if (fc.showOpenDialog(PrincipalFrame.this) == JFileChooser.APPROVE_OPTION){
                     //cargar el archivo 
-                    System.out.println(fc.getSelectedFile());
+                    try {
+                        buscaminas = GestionadorArchivo.abrirArchivo(fc.getSelectedFile());
+                        pnlTablero.removeAll();
+                        pnlTablero.drawTablero(buscaminas);
+                        PrincipalFrame.this.repaint();
+                    } catch (FileNotFoundException e) {
+                        JOptionPane.showMessageDialog(PrincipalFrame.this, "Archivo no encontrado", 
+                                "Alerta", JOptionPane.ERROR_MESSAGE);
+                    } catch (IOException ex) {
+                    Logger.getLogger(PrincipalFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(PrincipalFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    
+                    
                 }
             }
         });
@@ -124,13 +149,20 @@ public class PrincipalFrame extends JFrame{
             public void actionPerformed(ActionEvent ae) {
                JFileChooser fc = new JFileChooser();
                if(fc.showSaveDialog(PrincipalFrame.this) == JFileChooser.APPROVE_OPTION){
-                   //guardar el archivo
+
                    System.out.println(fc.getSelectedFile());
                    File f = new File(fc.getSelectedFile().toString());
                    if(f.exists()){
-                       JOptionPane.showMessageDialog(PrincipalFrame.this, "Mensajito",
-                               "aasd",
+                       JOptionPane.showMessageDialog(PrincipalFrame.this, "Ese archivo ya existe",
+                               "Cuidado...",
                                JOptionPane.WARNING_MESSAGE);
+                   }else{
+                      try {
+                          GestionadorArchivo.guardarArchivito(buscaminas, fc.getSelectedFile().toString());
+                      } catch (IOException ex) {
+                          Logger.getLogger(PrincipalFrame.class.getName()).log(Level.SEVERE, null, ex);
+                      }
+                       
                    }
                }
             }

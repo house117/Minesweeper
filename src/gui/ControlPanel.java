@@ -21,7 +21,7 @@ import javax.swing.JTextField;
  * @author House
  */
 public class ControlPanel extends JPanel{
-    private TButton btnJuego;
+    private CButton btnJuego;
     private JTextField txtMinas;
     private JTextField txtTiempo;
     private JLabel texto;
@@ -31,7 +31,7 @@ public class ControlPanel extends JPanel{
         super();
         super.setBackground(Color.RED);
         super.setLayout(new BorderLayout());
-        btnJuego = new TButton("/images/vivo.png");
+        btnJuego = new CButton("/images/vivo.png");
         TButton btn = new TButton("/images/muerto.png");
         
         

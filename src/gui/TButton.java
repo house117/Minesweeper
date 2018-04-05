@@ -29,8 +29,18 @@ public class TButton extends JButton{
         this.xx = xx;
         this.yy = yy;
         switch(celda.getEstado()){
+            /*
+                CERRADO,
+    ABIERTO,
+    INTERROGACION,
+    MINA,
+    BOOM,
+    BANDERA,
+    BANDERAMALA;
+            */
+           
             case INTERROGACION:
-                this.cargarIcono("images/interrogacion.png");
+                this.cargarIcono("/images/interrogacion.png");
                 break;
             case BANDERA:
                 this.cargarIcono("/images/bandera.png");

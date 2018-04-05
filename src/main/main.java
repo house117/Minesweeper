@@ -8,6 +8,7 @@ package main;
 import Objects.Celda;
 import Objects.GameEst;
 import controller.Buscaminas;
+import controller.GestionadorArchivo;
 import gui.PrincipalFrame;
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,25 +30,7 @@ HACER LO MISMO PERO CON EL OBJETO ALUMNO
 */
 public class main {
     
-    public static void guardarArchivito(Buscaminas b) throws FileNotFoundException, IOException{
-        File file = new File("miArchivo.txt");
-        FileOutputStream output = new FileOutputStream(file);
-        ObjectOutputStream writer = new ObjectOutputStream(output);
-        writer.writeObject(b);
-        writer.close();
-        output.close();
-        
-    }
-    public static Buscaminas abrirArchivo() throws FileNotFoundException, IOException, ClassNotFoundException{
-        File file = new File("miArchivo.txt");
-        FileInputStream input = new FileInputStream(file);
-        ObjectInputStream reader = new ObjectInputStream(input);
-        
-        Buscaminas resultado = (Buscaminas)reader.readObject();
-        reader.close();
-        input.close();
-        return resultado;
-    }
+ 
     
     
     public static void main(String[] args) {
@@ -79,7 +62,7 @@ public class main {
                 break;
             case 2:
                 try {
-                    busca = abrirArchivo();
+                    busca = GestionadorArchivo.abrirArchivo();
                 } catch (IOException | ClassNotFoundException e) {
                     System.out.println("error al abrir");
                 }
@@ -120,7 +103,7 @@ public class main {
                     
                     //Guardar buscaminas
             try {
-                guardarArchivito(busca);
+                GestionadorArchivo.guardarArchivito(busca, "ArchivoPichon");
             } catch (IOException eX) {
                 System.out.println("errorsito");
             }
